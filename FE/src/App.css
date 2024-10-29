@@ -1,0 +1,670 @@
+
+:root{
+  --blue:#3498db;
+  --red:#e74c3c;
+  --orange:#f39c12;
+  --black:#333;
+  --white:#fff;
+  --light-bg:#eee;
+  --box-shadow:0 5px 10px rgba(0,0,0,.1);
+  --border:2px solid var(--black);
+}
+.row {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping to keep items in a single row */
+  margin-left: -15px; /* Adjust for Bootstrap spacing */
+  margin-right: -15px; /* Adjust for Bootstrap spacing */
+}
+
+.banner-wrapper {
+  flex-wrap: nowrap; /* Ensure no wrapping occurs */
+  height: 100vh; /* Keep the height full */
+}
+
+.banner-content,
+.banner-logo {
+  flex: 1; /* Allow both columns to share available space equally */
+  padding: 0 15px; /* Add padding to each column */
+}
+
+/* Adjustments for small screens */
+@media (max-width: 768px) {
+  .banner-wrapper {
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    height: auto; /* Adjust height to content */
+  }
+  
+  .banner-content,
+  .banner-logo {
+    flex: 0 0 100%; /* Stack columns on small screens */
+    max-width: 100%; /* Ensure full width */
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Căn giữa các phần tử */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  padding: 10px 20px; /* Khoảng cách bên trong */
+  background-color: white; /* Màu nền */
+  color: #0091ff; /* Màu chữ mặc định */
+}
+
+.navbar-left a,
+.navbar-right a {
+  color: #0091ff; /* Màu chữ cho các liên kết */
+  text-decoration: none; /* Bỏ gạch chân */
+  margin: 0 10px; /* Khoảng cách giữa các liên kết */
+}
+
+.navbar-left a:hover,
+.navbar-right a:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
+}
+
+.loginBtn {
+  border: 1px solid #0091ff;
+  border-radius: 3px;
+  background-color: white;
+  padding: 5px;
+  margin: 3px;
+}
+
+.signUpBtn {
+  border: 1px solid #0091ff;
+  border-radius: 3px;
+  color: white; /* Màu chữ là trắng */
+  background-color: #0091ff; /* Màu nền nút là xanh */
+  padding: 5px;
+  margin: 3px;
+  cursor: pointer; /* Thay đổi con trỏ khi hover */
+}
+
+/* Đảm bảo chữ trong nút không bị ảnh hưởng bởi a bên trong */
+.signUpBtn a {
+  color: white; /* Màu chữ là trắng */
+  text-decoration: none; /* Bỏ gạch chân */
+}
+
+.signUpBtn a:hover {
+  text-decoration: underline; /* Gạch chân khi hover */
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.banner-home .banner-logo {
+  background: url('right-pancake.png');
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+}
+
+.banner-home .banner-logo {
+  background: url('right-pancake.png');
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+}
+.banner-box {
+  background-size: cover;
+  color: #000;
+}
+.banner-home .banner-logo-item a:first-child, .banner-home .banner-logo-item a:nth-child(2) {
+  margin-bottom: 16px;
+}
+.homepage .banner-home .banner-logo-item a {
+  border-radius: 85px;
+}
+.banner-home .banner-logo-item:first-child {
+  left: 0;
+  position: absolute;
+  top: 18%;
+}
+.banner-home .banner-logo-item a:first-child, .banner-home .banner-logo-item a:nth-child(2) {
+  margin-bottom: 16px;
+}
+.banner-home .banner-logo-item a {
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 8px 24px 0 rgba(0, 48, 104, .04);
+  display: flex;
+  transition: all .5s;
+}
+.banner-home .banner-logo-item:nth-child(2) {
+  position: absolute;
+  right: -2%;
+  top: 45%;
+}
+.banner-home .banner-logo-item:nth-child(3) {
+  bottom: 18%;
+  left: 5%;
+  position: absolute;
+}
+.touch-pointKVOS {
+  background-color: #ccf0d8;
+  border-radius: 12px;
+  bottom: 40px;
+  color: #15171a;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 8px 16px;
+  position: absolute;
+  width: -moz-max-content;
+  width: max-content;
+  bottom: 16px;
+}
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+  width: 100%;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  color: #00224a;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+body {
+  background-color: #fff;
+  color: #212529;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: left;
+}
+
+.banner-home {
+  background: url(https://cdn-kvweb.kiotviet.vn/kiotviet-website/wp-content/uploads/2024/04/08033116/banner-homepage.png) no-repeat top;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+}
+.banner-box {
+  background-size: cover;
+  color: #000;
+}
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+}
+.banner-wrapper {
+  flex-wrap: nowrap;
+  height: 100vh;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.banner-box {
+  background-size: cover;
+  color: #000;
+}
+.banner-below-right {
+  margin-top: 2rem;
+  position: relative;
+  z-index: 1;
+}
+.banner-below-right {
+  display: flex !important;
+}
+.banner-below-left {
+  margin-bottom: 2rem;
+}
+.banner-below-left {
+  display: flex !important;
+  margin-bottom: 40px;
+}
+.quantity-user {
+  color: #005ac3;
+  font-family: Inter, sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 36px;
+  margin: 0 8px;
+}
+.banner-below-right .total-register .quantity-user {
+  color: #009232;
+}
+.quantity-user {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+.btn-icon-video .banner-discover-icon {
+  background-clip: padding-box;
+  background-color: #fff;
+  border-radius: 50%;
+  color: #005ac3;
+  font-size: 3rem;
+  height: 4.4rem;
+  line-height: 4.4rem;
+  min-width: 4.4rem;
+  position: absolute;
+  right: 8px;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4.4rem;
+}
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+  width: 100%;
+}
+.row>[class*=col-] {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+@media only screen and (max-width: 1023px) {
+  .banner-home .banner-logo {
+      background: url(https://cdn-kvweb.kiotviet.vn/kiotviet-website/wp-content/uploads/2024/04/04035023/bannerhome-1200-1.png) no-repeat;
+      background-position: bottom;
+      background-repeat: no-repeat;
+      background-size: contain;
+      position: relative;
+  }
+}
+@media (min-width: 768px) {
+  .col-md-7 {
+      flex: 0 0 58.33333333%;
+      max-width: 58.33333333%;
+  }
+}
+.col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+  width: 100%;
+}
+* {
+  box-sizing: border-box;
+}
+*, :after, :before {
+  box-sizing: border-box;
+}
+
+.row {
+  margin-left: -12px;
+  margin-right: -12px;
+}
+@media only screen and (max-width: 1199px) {
+  .banner-wrapper {
+      height: 560px;
+  }
+}
+.banner-wrapper {
+  flex-wrap: nowrap;
+  height: 100vh;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+}
+
+.container {
+  max-width: 1200px; /* Limit max width for better readability */
+  margin: 0 auto;
+  padding: 0 15px; /* Ensure padding */
+}
+
+.banner-home {
+  background: url(https://cdn-kvweb.kiotviet.vn/kiotviet-website/wp-content/uploads/2024/04/08033116/banner-homepage.png) no-repeat center center;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+}
+
+.banner-box {
+  color: #000;
+  background-size: cover;
+  padding: 20px; /* Added padding for content */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack items on small screens */
+    align-items: flex-start; /* Align left */
+  }
+
+  .banner-home {
+    height: 70vh; /* Adjust height for smaller screens */
+  }
+}
+@media only screen and (max-width: 767px) {
+  .banner-home .banner-logo {
+      background-position: bottom;
+      background-size: contain;
+      flex: 1;
+      margin-top: 40px;
+  }
+}
+@media (max-width: 767px) {
+  .homepage .banner-home .banner-content {
+      padding-left: 0 !important;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .banner-home .banner-content {
+      margin-top: 80px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .banner-home .banner-content {
+      justify-content: center;
+      margin-top: 30px;
+      padding-right: 0 !important;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .banner-home .banner-content {
+      justify-content: center;
+  }
+}
+.banner-home .banner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media only screen and (max-width: 767px) {
+  .banner-wrapper {
+      flex-direction: column;
+      flex-wrap: wrap;
+      height: 750px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .banner-wrapper {
+      height: 360px;
+  }
+}
+@media only screen and (max-width: 1199px) {
+  .banner-wrapper {
+      height: 560px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .banner-wrapper {
+      flex-direction: column;
+      flex-wrap: wrap;
+      height: 750px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .banner-wrapper {
+      height: 360px;
+  }
+}
+@media only screen and (max-width: 1199px) {
+  .banner-wrapper {
+      height: 560px;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .banner-home .banner-logo {
+      background-position: bottom;
+      background-size: contain;
+      flex: 1;
+      margin-top: 40px;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .banner-home .banner-logo {
+      background: url(https://cdn-kvweb.kiotviet.vn/kiotviet-website/wp-content/uploads/2024/04/04035023/bannerhome-1200-1.png) no-repeat;
+      background-position: bottom;
+      background-repeat: no-repeat;
+      background-size: contain;
+      position: relative;
+  }
+}
+div {
+  display: block;
+  unicode-bidi: isolate;
+}
+
+.form-container{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:20px;
+  padding-bottom: 70px;
+}
+.form-container form{
+  width: 500px;
+  border:var(--border);
+  padding:20px;
+  text-align: center;
+  background-color: var(--white);
+}
+
+.form-container form h3{
+  font-size: 30px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  color:var(--black);
+}
+
+.form-container form .box{
+  width: 100%;
+  border:var(--border);
+  padding:12px 14px;
+  font-size: 18px;
+  margin:10px 0;
+}
+
+.form-container form p{
+  margin-top: 20px;
+  font-size: 20px;
+  color:var(--black);
+}
+
+.form-container form p a{
+  color:var(--red);
+}
+
+.form-container form p a:hover{
+  text-decoration: underline;
+}
+.btn {
+  background-color: #008cff;
+  font-size: 20px;
+}
+.box-popup-register {
+  background-clip: padding-box;
+  background-color: #0070f4;
+  border-color: #0070f4 !important;
+  border: unset;
+  border-radius: 99px;
+  color: #fff;
+  font-family: Inter, sans-serif;
+  padding: 16px 32.4px;
+}
+.register {
+  background-color: #0070f4;
+  border: none;
+  border-radius: 99px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, .08);
+  color: #fff;
+  cursor: pointer;
+  font-family: Inter, sans-serif, arial;
+  padding: 0 3rem;
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  -ms-transition: all .2s ease-in-out;
+  -o-transition: all .2s ease-in-out;
+  white-space: nowrap;
+}
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+}
+
+.btn-icon-video-1 {
+  border: none !important;
+  border-radius: 99px;
+  line-height: 1.5;
+  padding: 16px 8px 16px 24px !important;
+  position: relative;
+}
+.btn-outline-gray-1 {
+  background-color: #4b98f6;
+  border-radius: 99px;
+  color: #fff;
+  font-weight: 600;
+}
+.btn-outline-gray-1:hover {
+  background-color: #2381f4;
+  border-radius: 99px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.center {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f2f5; /* Màu nền nhẹ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Chiều cao đầy đủ của viewport */
+}
+
+.login-fanpage {
+  max-width: 400px;
+  width: 100%; /* Chiều rộng đầy đủ cho màn hình nhỏ */
+  padding: 20px;
+  border: 1px solid #ccc; /* Viền */
+  border-radius: 8px; /* Bo góc */
+  background-color: white; /* Nền trắng cho form */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+}
+
+.login-fanpage h2 {
+  text-align: center;
+}
+
+.login-fanpage .error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.login-fanpage form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-fanpage label {
+  margin-bottom: 5px;
+}
+
+.login-fanpage input {
+  margin-bottom: 15px;
+  padding: 10px; /* Tăng kích thước padding */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.login-fanpage button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+}
+
+.login-fanpage button:hover {
+  background-color: #0056b3;
+}
+
+.register-fanpage {
+  max-width: 400px;
+  width: 100%; /* Chiều rộng đầy đủ cho màn hình nhỏ */
+  padding: 20px;
+  border: 1px solid #ccc; /* Viền */
+  border-radius: 8px; /* Bo góc */
+  background-color: white; /* Nền trắng cho form */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng cho form */
+}
+
+.register-fanpage h2 {
+  text-align: center;
+}
+
+.register-fanpage .error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.register-fanpage form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-fanpage label {
+  margin-bottom: 5px;
+}
+
+.register-fanpage input {
+  margin-bottom: 15px;
+  padding: 10px; /* Tăng kích thước padding */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.register-fanpage button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Hiệu ứng chuyển màu */
+}
+
+.register-fanpage button:hover {
+  background-color: #0056b3;
+}
+/* styles.css */
+.container {
+  max-width: 600px; /* Điều chỉnh kích thước tối đa */
+  margin: 0 auto; /* Căn giữa */
+  padding: 20px; /* Khoảng cách bên trong */
+  text-align: center; /* Căn giữa văn bản */
+}
+
+form {
+  margin-bottom: 20px; /* Khoảng cách giữa form và danh sách bài viết */
+}
+
+ul {
+  list-style-type: none; /* Xóa dấu đầu dòng */
+  padding: 0; /* Xóa padding mặc định */
+}
