@@ -4,8 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node BE/app.js",
-    "server": "nodemon BE/app.js",
+    "start": "node app.js",
+    "server": "nodemon app.js",
     "client": "npm start --prefix FE",
     "build": "npm run build --prefix FE",
     "dev": "concurrently \"npm run server\" \"npm run client\""
