@@ -33,16 +33,17 @@ const NODE_ENV = 'production';
 const __dirname = path.resolve();
 
 if (NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, './FE/build')));
+  app.use(express.static(path.join(__dirname, '../FE/build'))); // Đường dẫn đến FE/build
 
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, './FE/build/index.html'))
+    res.sendFile(path.resolve(__dirname, '../FE/build/index.html')) // Đường dẫn đến index.html
   );
 } else {
   app.get('/', (req, res) => {
     res.send('API is running....');
   });
 }
+
 
 const PORT = process.env.PORT || 5000;
 
