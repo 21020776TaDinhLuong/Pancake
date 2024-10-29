@@ -37,10 +37,6 @@ const ProductListScreen = () => {
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET })
 
-    if (!userInfo || !userInfo.isAdmin) {
-      window.location.href='/login';
-    }
-
     if (successCreate) {
       window.location.href=`/admin/product/${createdProduct._id}/edit`;
     } else {

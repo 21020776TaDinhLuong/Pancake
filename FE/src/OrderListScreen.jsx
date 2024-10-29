@@ -37,10 +37,6 @@ const OrderListScreen = () => {
   useEffect(() => {
     dispatch({ type: ORDER_CREATE_RESET })
 
-    if (!userInfo || !userInfo.isAdmin) {
-      window.location.href='/login';
-    }
-
     if (successCreate) {
       window.location.href=`/admin/order/${createdOrder._id}/edit`;
     } else {

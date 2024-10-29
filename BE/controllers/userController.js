@@ -163,7 +163,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/profile
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.params._id);
 
   if (user) {
     user.name = req.body.name || user.name;
@@ -228,25 +228,32 @@ const getUserById = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/:id
 // @access  Private/Admin
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params._id);
+  const userId = req.body._id; // Use a more explicit variable name
+  if (!userId) {
+    res.status(400);
+    throw new Error('User ID is required');
+  }
 
-  if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.isAdmin = req.body.isAdmin;
+  const user = await User.findById(userId);
 
-    const updatedUser = await user.save();
-
-    res.json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
-    });
-  } else {
+  if (!user) {
     res.status(404);
     throw new Error('User not found');
   }
+
+  // Update user fields conditionally
+  user.name = req.body.name || user.name;
+  user.email = req.body.email || user.email;
+  user.isAdmin = req.body.isAdmin !== undefined ? req.body.isAdmin : user.isAdmin; // Check if isAdmin is provided
+
+  const updatedUser = await user.save();
+
+  res.json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    isAdmin: updatedUser.isAdmin,
+  });
 });
 
 export {
