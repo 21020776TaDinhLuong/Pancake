@@ -21,6 +21,9 @@ import Fanpage from './Fanpage'; // Import Fanpage
 import FanpagePost from './FanpagePost'; // Import FanpagePost
 import LoginFanpage from './LoginFanpage';
 import RegisterFanpage from './RegisterFanpage';
+import ChatFanpage from './ChatFanpage';
+import ChatWithFacebookAPI from './ChatWithFacebookAPI ';
+import FacebookPosts from './FacebookPosts';
 
 function App() {
   return (
@@ -43,7 +46,8 @@ function App() {
         <Route path='/admin/userinfo' element={<UserInfo/>} />
         <Route path='/fanpage-dashboard' element={<Fanpage/>} /> 
         <Route path='/fanpage/:id/posts' element={<FanpagePost />} />
-        
+        <Route path='/chat' element={<FacebookPosts />} />
+
       </Routes>
     </Router>
     </>

@@ -22,6 +22,8 @@ const Header = () => {
                     {userInfo &&<a href="/admin/orderlist">Order Management</a>}
                     {userInfo &&<a href="/admin/carelist">Care Management</a>}
                     {userInfo &&<a href="/admin/userinfo">User Info</a>}
+                    {<a href="/chat">Chat</a>}
+
 
 
 
