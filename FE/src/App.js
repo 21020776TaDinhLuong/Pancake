@@ -41,8 +41,9 @@ function App() {
         <Route path='/admin/carelist' element={<CareListScreen/>} />
         <Route path='/admin/care/:id/edit' element={<CareAddScreen/>} />
         <Route path='/admin/userinfo' element={<UserInfo/>} />
-        <Route path='/fanpage-dashboard' element={<Fanpage/>} /> {/* Route cho Fanpage */}
-        <Route path='/fanpage/:id/posts' element={<FanpagePost />} /> {/* Route cho bài viết của fanpage */}
+        <Route path='/fanpage-dashboard' element={<Fanpage/>} /> 
+        <Route path='/fanpage/:id/posts' element={<FanpagePost />} />
+        
       </Routes>
     </Router>
     </>
