@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import FacebookPosts from './FacebookPosts';
 
 const PageSelector = () => {
@@ -33,12 +34,13 @@ const PageSelector = () => {
   const fetchPages = async (token) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://graph.facebook.com/me/accounts?access_token=${token}`);
-      const data = await response.json();
-      if (data.data) {
-        setPages(data.data);
+      const response = await axios.get(`https://graph.facebook.com/me/accounts`, {
+        params: { access_token: token }
+      });
+      if (response.data.data) {
+        setPages(response.data.data);
       } else {
-        console.error('No pages found:', data);
+        console.error('No pages found:', response.data);
       }
     } catch (error) {
       console.error('Error fetching pages:', error);
