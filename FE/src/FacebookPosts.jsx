@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 const FacebookPosts = ({ pageId, accessToken }) => {
   const [posts, setPosts] = useState([]);
@@ -11,16 +10,11 @@ const FacebookPosts = ({ pageId, accessToken }) => {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get(
-        `https://graph.facebook.com/v21.0/${pageId}/feed`,
-        {
-          params: {
-            fields: 'message,created_time,from,comments{from,message,created_time,comments{from,message,created_time}}',
-            access_token: accessToken
-          }
-        }
+      const response = await fetch(
+        `https://graph.facebook.com/v21.0/${pageId}/feed?fields=message,created_time,from,comments{from,message,created_time,comments{from,message,created_time}}&access_token=${accessToken}`
       );
-      setPosts(response.data.data || []);
+      const data = await response.json();
+      setPosts(data.data || []);
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
@@ -34,22 +28,17 @@ const FacebookPosts = ({ pageId, accessToken }) => {
     const reply = replies[commentId];
     if (reply) {
       try {
-        const response = await axios.post(
-          `https://graph.facebook.com/v21.0/${commentId}/comments`,
-          null,
-          {
-            params: {
-              message: reply,
-              access_token: accessToken
-            }
-          }
+        const response = await fetch(
+          `https://graph.facebook.com/v21.0/${commentId}/comments?message=${encodeURIComponent(reply)}&access_token=${accessToken}`,
+          { method: 'POST' }
         );
 
-        if (response.status === 200) {
+        if (response.ok) {
           setReplies((prev) => ({ ...prev, [commentId]: '' }));
           fetchPosts(); // Refresh posts to show the new reply
         } else {
-          console.error('Error submitting reply:', response.data);
+          const errorData = await response.json();
+          console.error('Error submitting reply:', errorData);
         }
       } catch (error) {
         console.error('Error:', error);
