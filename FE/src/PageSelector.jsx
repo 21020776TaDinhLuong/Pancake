@@ -11,7 +11,7 @@ const PageSelector = () => {
   useEffect(() => {
     window.fbAsyncInit = () => {
       window.FB.init({
-        appId: '917549590252924', // Replace with your app ID
+        appId: '532347549407588', // Replace with your app ID
         cookie: true,
         xfbml: true,
         version: 'v21.0' // Use the latest version
