@@ -45,7 +45,6 @@ const FacebookPosts = ({ pageId, accessToken }) => {
       }
     }
   };
-  console.log(posts);
 
   return (
     <div>

@@ -11,10 +11,10 @@ const PageSelector = () => {
   useEffect(() => {
     window.fbAsyncInit = () => {
       window.FB.init({
-        appId: '1075843353920444', // Replace with your app ID
+        appId: '1230095174938811', // Replace with your app ID
         cookie: true,
         xfbml: true,
-        version: 'v12.0' // Use the latest version
+        version: 'v21.0' // Use the latest version
       });
 
       window.FB.getLoginStatus((response) => {
