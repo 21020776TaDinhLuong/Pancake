@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import FacebookPosts from './FacebookPosts';
 
 const PageSelector = () => {
@@ -15,7 +14,7 @@ const PageSelector = () => {
         appId: '532347549407588', // Replace with your app ID
         cookie: true,
         xfbml: true,
-        version: 'v21.0' // Use the latest version
+        version: 'v12.0' // Use the latest version
       });
 
       window.FB.getLoginStatus((response) => {
@@ -34,13 +33,12 @@ const PageSelector = () => {
   const fetchPages = async (token) => {
     setLoading(true);
     try {
-      const response = await axios.get(`https://graph.facebook.com/me/accounts`, {
-        params: { access_token: token }
-      });
-      if (response.data.data) {
-        setPages(response.data.data);
+      const response = await fetch(`https://graph.facebook.com/me/accounts?access_token=${token}`);
+      const data = await response.json();
+      if (data.data) {
+        setPages(data.data);
       } else {
-        console.error('No pages found:', response.data);
+        console.error('No pages found:', data);
       }
     } catch (error) {
       console.error('Error fetching pages:', error);
@@ -57,7 +55,7 @@ const PageSelector = () => {
       } else {
         console.error('User cancelled login or did not fully authorize.');
       }
-    }, { scope: 'public_profile,pages_show_list' });
+    }, { scope: 'public_profile,email,pages_show_list' });
   };
 
   const handleLogout = () => {

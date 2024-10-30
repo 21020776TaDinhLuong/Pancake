@@ -5,7 +5,7 @@ const FacebookChat = () => {
   return (
     <div>
       <h1>Quản Lý Bài Viết Facebook</h1>
-      <PageSelector />
+      <PageSelector/>
     </div>
   );
 };
