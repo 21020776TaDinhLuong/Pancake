@@ -17,13 +17,11 @@ import OrderAddScreen from './OrderAddScreen';
 import CareListScreen from './CareListScreen';
 import CareAddScreen from './CareAddScreen';
 import UserInfo from './UserInfo';
-import Fanpage from './Fanpage'; // Import Fanpage
-import FanpagePost from './FanpagePost'; // Import FanpagePost
+import Fanpage from './Fanpage';
+import FanpagePost from './FanpagePost';
 import LoginFanpage from './LoginFanpage';
 import RegisterFanpage from './RegisterFanpage';
-import ChatFanpage from './ChatFanpage';
-import ChatWithFacebookAPI from './ChatWithFacebookAPI ';
-import FacebookPosts from './FacebookPosts';
+import FacebookChat from './FacebookChat';
 
 function App() {
   return (
@@ -46,7 +44,7 @@ function App() {
         <Route path='/admin/userinfo' element={<UserInfo/>} />
         <Route path='/fanpage-dashboard' element={<Fanpage/>} /> 
         <Route path='/fanpage/:id/posts' element={<FanpagePost />} />
-        <Route path='/chat' element={<FacebookPosts />} />
+        <Route path='/chat' element={<FacebookChat/>} />
 
       </Routes>
     </Router>

@@ -668,3 +668,30 @@ ul {
   list-style-type: none; /* Xóa dấu đầu dòng */
   padding: 0; /* Xóa padding mặc định */
 }
+
+.page-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Khoảng cách giữa các card */
+}
+
+.page-card {
+  background-color: #f9f9f9; /* Màu nền cho card */
+  border: 1px solid #ccc; /* Viền card */
+  border-radius: 8px; /* Bo góc card */
+  padding: 15px; /* Khoảng cách bên trong card */
+  width: 200px; /* Độ rộng card */
+  cursor: pointer; /* Hiển thị con trỏ khi di chuột vào card */
+  transition: transform 0.2s; /* Hiệu ứng khi hover */
+}
+
+.page-card:hover {
+  transform: scale(1.05); /* Phóng to card khi hover */
+}
+
+.page-name {
+  color: #007bff; /* Màu chữ xanh */
+  margin: 0; /* Xóa margin mặc định */
+  font-size: 1.2em; /* Kích thước chữ */
+}
+

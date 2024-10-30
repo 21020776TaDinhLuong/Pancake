@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-const PAGE_ID = '506766159175647'; // Thay thế bằng ID trang của bạn
-const ACCESS_TOKEN = 'EAAPSeUzxw7wBO65Emt924B9ZCCydIxr08CVmN2MUWZAPo4XyYtXZAekdtCpM1szsY9iAqCIDVp0y11bZCrfeLZAsakIuNlzDZCjYzaQ3VSnRPUzGZC12JllKLDUUQjPMNDWYxPMZCYLMxVZCGEDM5szFn6pwyIgylMDljsdazGndPeEqAeZCkNJOMpMNAdqx2VNsq2'; // Thay thế bằng mã truy cập của bạn
+const ACCESS_TOKEN = 'EAAPSeUzxw7wBOyP2qIKPG5fosNgsCcOSwgYoJOwLBJF0YCZAUvYdcQ0eAG6gZBz4O21ugcIfz2v7nCFWVsaR3M4P7AjebLZB0DiRi5gYuFpZB8xZBkojtFDdae1COZCewI8WI0vagTdmP0IW839EMgS1CYuDRNZBnXMFZBQ0By4ZAZB0y39MpZBe4WD3V8fZAUfw0gQj'; // Thay thế bằng mã truy cập của bạn
 
-const FacebookPosts = () => {
+const FacebookPosts = ({ pageId }) => {
   const [posts, setPosts] = useState([]);
   const [replies, setReplies] = useState({}); // Quản lý phản hồi
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [pageId]);
 
   const fetchPosts = async () => {
     try {
       const response = await fetch(
-        `https://graph.facebook.com/v21.0/${PAGE_ID}/feed?fields=message,created_time,from,comments{from,message,created_time,comments{from,message,created_time}}&access_token=${ACCESS_TOKEN}`
+        `https://graph.facebook.com/v21.0/${pageId}/feed?fields=message,created_time,from,comments{from,message,created_time,comments{from,message,created_time}}&access_token=${ACCESS_TOKEN}`
       );
       const data = await response.json();
       console.log(data); // In ra dữ liệu để kiểm tra
