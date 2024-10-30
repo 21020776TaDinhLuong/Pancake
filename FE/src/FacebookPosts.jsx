@@ -52,7 +52,7 @@ const FacebookPosts = ({ pageId, accessToken }) => {
       {posts.length > 0 ? (
         posts.map((post) => (
           <div key={post.id} style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ddd' }}>
-            <h4>Tác giả: {post.from?.name || ''}</h4>
+            <h4>Tác giả: {post.from?.name || 'Người dùng'}</h4>
             <p>Nội dung bài viết: {post.message || ''}</p>
             <p>Thời gian tạo: {new Date(post.created_time).toLocaleString()}</p>
 
@@ -61,7 +61,7 @@ const FacebookPosts = ({ pageId, accessToken }) => {
                 <h5>Bình luận:</h5>
                 {post.comments.data.map((comment) => (
                   <div key={comment.id} style={{ marginBottom: '10px', borderTop: '1px solid #ccc', paddingTop: '5px' }}>
-                    <p><strong>{comment.from?.name || ''}:</strong> {comment.message || ''}</p>
+                    <p><strong>{comment.from?.name || 'Người dùng'}:</strong> {comment.message || ''}</p>
                     <p>Thời gian bình luận: {new Date(comment.created_time).toLocaleString()}</p>
 
                     {comment.comments && comment.comments.data.length > 0 && (
@@ -69,7 +69,7 @@ const FacebookPosts = ({ pageId, accessToken }) => {
                         <h6>Phản hồi:</h6>
                         {comment.comments.data.map((reply) => (
                           <div key={reply.id} style={{ marginBottom: '5px', borderTop: '1px dashed #ccc', paddingTop: '5px' }}>
-                            <p><strong>{reply.from?.name || ''}:</strong> {reply.message || ''}</p>
+                            <p><strong>{reply.from?.name || 'Người dùng'}:</strong> {reply.message || ''}</p>
                             <p>Thời gian phản hồi: {new Date(reply.created_time).toLocaleString()}</p>
                           </div>
                         ))}

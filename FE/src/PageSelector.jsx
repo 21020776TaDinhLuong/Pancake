@@ -55,7 +55,7 @@ const PageSelector = () => {
       } else {
         console.error('User cancelled login or did not fully authorize.');
       }
-    }, { scope: 'public_profile,email,pages_show_list' });
+    }, { scope: 'public_profile,pages_show_list' });
   };
 
   const handleLogout = () => {
