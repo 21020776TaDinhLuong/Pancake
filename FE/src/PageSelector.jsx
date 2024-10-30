@@ -6,6 +6,7 @@ const PageSelector = () => {
   const [selectedPageId, setSelectedPageId] = useState(null);
   const [selectedPageToken, setSelectedPageToken] = useState('');
   const [accessToken, setAccessToken] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     window.fbAsyncInit = () => {
@@ -24,13 +25,13 @@ const PageSelector = () => {
       });
     };
 
-    // Load the SDK asynchronously
     const script = document.createElement('script');
     script.src = 'https://connect.facebook.net/en_US/sdk.js';
     document.body.appendChild(script);
   }, []);
 
   const fetchPages = async (token) => {
+    setLoading(true);
     try {
       const response = await fetch(`https://graph.facebook.com/me/accounts?access_token=${token}`);
       const data = await response.json();
@@ -41,6 +42,8 @@ const PageSelector = () => {
       }
     } catch (error) {
       console.error('Error fetching pages:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,6 +58,15 @@ const PageSelector = () => {
     }, { scope: 'public_profile,email,pages_show_list' });
   };
 
+  const handleLogout = () => {
+    window.FB.logout(() => {
+      setAccessToken('');
+      setPages([]);
+      setSelectedPageId(null);
+      setSelectedPageToken('');
+    });
+  };
+
   const handlePageSelect = (page) => {
     setSelectedPageId(page.id);
     setSelectedPageToken(page.access_token);
@@ -66,17 +78,24 @@ const PageSelector = () => {
       {!accessToken ? (
         <button onClick={handleLogin}>Đăng nhập với Facebook</button>
       ) : (
-        <div className="page-list">
-          {pages.length > 0 ? (
-            pages.map((page) => (
-              <div key={page.id} className="page-card" onClick={() => handlePageSelect(page)}>
-                <h4 className="page-name">{page.name}</h4>
-                <p>Danh mục: {page.category}</p>
-              </div>
-            ))
-          ) : (
-            <p>Không có trang nào để hiển thị.</p>
-          )}
+        <div>
+          <button onClick={handleLogout}>Đăng xuất</button>
+          <div className="page-list">
+            {loading ? (
+              <p>Đang tải...</p>
+            ) : (
+              pages.length > 0 ? (
+                pages.map((page) => (
+                  <div key={page.id} className="page-card" onClick={() => handlePageSelect(page)}>
+                    <h4 className="page-name">{page.name}</h4>
+                    <p>Danh mục: {page.category}</p>
+                  </div>
+                ))
+              ) : (
+                <p>Không có trang nào để hiển thị.</p>
+              )
+            )}
+          </div>
         </div>
       )}
       
