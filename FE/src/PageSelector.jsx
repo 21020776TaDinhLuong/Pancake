@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FacebookPosts from './FacebookPosts';
 
-const ACCESS_TOKEN = 'EAAPSeUzxw7wBO6OTk4w0RhlU2iEABTyj90erpqnc0SSUOmoaBolKZAgZBz5XZBpHDsZClAuRQeIszzC9eBztZB01vMMggYHi0pBpb5lore4MvEF8ksQKXTPC8Ham4GWPsxiFOWFKVOwMUi4sUXbvwtBUudDvgq1Yvj1oW0iRKS8jLWpcjpKmzytmi';
+const ACCESS_TOKEN = 'EAAPSeUzxw7wBOZC2bWSv4HY9IaZCq8Lz7XN9xZBcxZCcP2F5I9O1K6XfEr5UTog0KFyQPM3B7KezXO8nL815as03wB6q4f42SP2zsw9YGePtXmjZAQt1txyFnyZBZB6aawyTwJWT3lDncYggfiIfvzymcGNMdAGOpKikCMieTdV6vNZBvCd4eVl00H2c';
 
 const PageSelector = () => {
   const [pages, setPages] = useState([]);
