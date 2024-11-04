@@ -1,0 +1,52 @@
+.facebook-posts {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 12.5%; /* 1/8 of the screen */
+  border-right: 1px solid #ccc;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.user-item {
+  cursor: pointer;
+  padding: 5px;
+  transition: background-color 0.3s;
+}
+
+.user-item:hover {
+  background-color: #f0f0f0;
+}
+
+.chat-window {
+  width: 87.5%; /* 7/8 of the screen */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-history {
+  flex-grow: 1;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.user-message {
+  text-align: right;
+  background-color: #d0f0c0; /* Light green */
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.bot-message {
+  text-align: left;
+  background-color: #f0d0d0; /* Light red */
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+}

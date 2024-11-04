@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
+import './FacebookPosts.css'; // Assuming you have a CSS file for styles
 
 const FacebookPosts = ({ pageId, accessToken }) => {
-  const [posts, setPosts] = useState([]);
-  const [replies, setReplies] = useState({});
+  const [users, setUsers] = useState([]);
+  const [chatUser, setChatUser] = useState(null);
+  const [message, setMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
 
   useEffect(() => {
     fetchPosts();
@@ -11,34 +14,93 @@ const FacebookPosts = ({ pageId, accessToken }) => {
   const fetchPosts = async () => {
     try {
       const response = await fetch(
-        `https://graph.facebook.com/v21.0/${pageId}/feed?fields=message,created_time,from,comments{from,message,created_time,comments{from,message,created_time}}&access_token=${accessToken}`
+        `https://graph.facebook.com/v21.0/${pageId}/feed?fields=comments{from}&access_token=${accessToken}`
       );
       const data = await response.json();
-      setPosts(data.data || []);
+      const usersSet = new Set();
+
+      // Collect unique users from comments
+      data.data.forEach(post => {
+        post.comments?.data.forEach(comment => {
+          if (comment.from) {
+            usersSet.add({ id: comment.from.id, name: comment.from.name });
+          }
+        });
+      });
+
+      setUsers(Array.from(usersSet)); // Convert Set to Array
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
   };
 
-  const handleReplyChange = (commentId, value) => {
-    setReplies((prev) => ({ ...prev, [commentId]: value }));
+  const fetchChatHistory = async (userId) => {
+    try {
+      // Fetch conversations for the selected user
+      const response = await fetch(
+        `https://graph.facebook.com/v21.0/${pageId}/conversations?user_id=${userId}&access_token=${accessToken}`
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Error fetching conversations: ${errorData.error.message}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.data) {
+        const messages = await Promise.all(data.data.map(async (conversation) => {
+          const messageResponse = await fetch(
+            `https://graph.facebook.com/v21.0/${conversation.id}/messages?access_token=${accessToken}`
+          );
+
+          if (!messageResponse.ok) {
+            const errorData = await messageResponse.json();
+            throw new Error(`Error fetching messages: ${errorData.error.message}`);
+          }
+
+          const messageData = await messageResponse.json();
+
+          return messageData.data.map(msg => ({
+            text: msg.message?.text || '',
+            timestamp: msg.created_time || new Date().toISOString(),
+            isUser: msg.sender?.id === userId,
+          }));
+        }));
+
+        setChatHistory(messages.flat()); // Flatten the array of messages
+      } else {
+        console.error('No conversations found:', data);
+      }
+    } catch (error) {
+      console.error('Error fetching chat history:', error.message);
+    }
   };
 
-  const handleReplySubmit = async (commentId) => {
-    const reply = replies[commentId];
-    if (reply) {
+  const sendMessage = async () => {
+    if (chatUser && message) {
       try {
         const response = await fetch(
-          `https://graph.facebook.com/v21.0/${commentId}/comments?message=${encodeURIComponent(reply)}&access_token=${accessToken}`,
-          { method: 'POST' }
+          `https://graph.facebook.com/v2.6/me/messages?access_token=${accessToken}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              recipient: { id: chatUser.id },
+              message: { text: message },
+            }),
+          }
         );
 
         if (response.ok) {
-          setReplies((prev) => ({ ...prev, [commentId]: '' }));
-          fetchPosts(); // Refresh posts to show the new reply
+          setMessage(''); // Clear message input
+          // Add the sent message to chat history
+          setChatHistory(prev => [...prev, { text: message, timestamp: new Date(), isUser: true }]);
         } else {
           const errorData = await response.json();
-          console.error('Error submitting reply:', errorData);
+          console.error('Error sending message:', errorData);
         }
       } catch (error) {
         console.error('Error:', error);
@@ -47,51 +109,47 @@ const FacebookPosts = ({ pageId, accessToken }) => {
   };
 
   return (
-    <div>
-      <h3>Bài Viết và Bình Luận</h3>
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <div key={post.id} style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ddd' }}>
-            <h4>Tác giả: {post.from?.name || 'Người dùng'}</h4>
-            <p>Nội dung bài viết: {post.message || ''}</p>
-            <p>Thời gian tạo: {new Date(post.created_time).toLocaleString()}</p>
+    <div className="facebook-posts">
+      <div className="sidebar">
+        <h3>Danh sách người dùng</h3>
+        {users.length > 0 ? (
+          users.map(user => (
+            <div key={user.id} className="user-item" onClick={() => {
+              setChatUser(user);
+              fetchChatHistory(user.id); // Fetch chat history using user ID
+            }}>
+              <p>{user.name}</p>
+            </div>
+          ))
+        ) : (
+          <p>Không có người dùng nào để hiển thị.</p>
+        )}
+      </div>
 
-            {post.comments && post.comments.data.length > 0 && (
-              <div style={{ marginTop: '10px', paddingLeft: '15px' }}>
-                <h5>Bình luận:</h5>
-                {post.comments.data.map((comment) => (
-                  <div key={comment.id} style={{ marginBottom: '10px', borderTop: '1px solid #ccc', paddingTop: '5px' }}>
-                    <p><strong>{comment.from?.name || 'Người dùng'}:</strong> {comment.message || ''}</p>
-                    <p>Thời gian bình luận: {new Date(comment.created_time).toLocaleString()}</p>
-
-                    {comment.comments && comment.comments.data.length > 0 && (
-                      <div style={{ marginLeft: '20px', marginTop: '10px' }}>
-                        <h6>Phản hồi:</h6>
-                        {comment.comments.data.map((reply) => (
-                          <div key={reply.id} style={{ marginBottom: '5px', borderTop: '1px dashed #ccc', paddingTop: '5px' }}>
-                            <p><strong>{reply.from?.name || 'Người dùng'}:</strong> {reply.message || ''}</p>
-                            <p>Thời gian phản hồi: {new Date(reply.created_time).toLocaleString()}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    <input
-                      type="text"
-                      placeholder="Trả lời..."
-                      value={replies[comment.id] || ''}
-                      onChange={(e) => handleReplyChange(comment.id, e.target.value)}
-                    />
-                    <button onClick={() => handleReplySubmit(comment.id)}>Gửi</button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))
-      ) : (
-        <p>Không có bài viết nào để hiển thị.</p>
-      )}
+      <div className="chat-window">
+        {chatUser ? (
+          <>
+            <h4>Chat với {chatUser.name}</h4>
+            <div className="chat-history">
+              {chatHistory.map((msg, index) => (
+                <div key={index} className={msg.isUser ? 'user-message' : 'bot-message'}>
+                  <p>{msg.text}</p>
+                  <p>{new Date(msg.timestamp).toLocaleString()}</p>
+                </div>
+              ))}
+            </div>
+            <input
+              type="text"
+              placeholder="Nhắn tin..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button onClick={sendMessage}>Gửi</button>
+          </>
+        ) : (
+          <p>Chọn một người dùng để bắt đầu trò chuyện.</p>
+        )}
+      </div>
     </div>
   );
 };

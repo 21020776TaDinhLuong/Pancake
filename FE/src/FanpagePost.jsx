@@ -1,63 +1,139 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { listPosts, createPost } from './actions/postActions';
+import React, { useState, useEffect } from 'react';
+import './FacebookPosts.css'; // Assuming you have a CSS file for styles
 
-const FanpagePost = () => {
-    const { id } = useParams();
-    const dispatch = useDispatch();
+const FacebookPosts = ({ pageId, accessToken }) => {
+  const [posts, setPosts] = useState([]);
+  const [replies, setReplies] = useState({});
+  const [chatUser, setChatUser] = useState(null);
+  const [message, setMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
 
-    const postList = useSelector((state) => state.postList);
-    const { posts = [], loading, error } = postList;
+  useEffect(() => {
+    fetchPosts();
+  }, [pageId, accessToken]);
 
-    const postCreate = useSelector((state) => state.postCreate);
-    const { success } = postCreate;
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch(
+        `https://graph.facebook.com/v21.0/${pageId}/feed?fields=message,created_time,from,comments{from,message,created_time,comments{from,message,created_time}}&access_token=${accessToken}`
+      );
+      const data = await response.json();
+      setPosts(data.data || []);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
 
-    const [content, setContent] = useState('');
+  const handleReplyChange = (commentId, value) => {
+    setReplies((prev) => ({ ...prev, [commentId]: value }));
+  };
 
-    useEffect(() => {
-        dispatch(listPosts(id));
-    }, [dispatch, id, success]);
+  const handleReplySubmit = async (commentId) => {
+    const reply = replies[commentId];
+    if (reply) {
+      try {
+        const response = await fetch(
+          `https://graph.facebook.com/v21.0/${commentId}/comments?message=${encodeURIComponent(reply)}&access_token=${accessToken}`,
+          { method: 'POST' }
+        );
 
-    const handlePostSubmit = (e) => {
-        e.preventDefault();
-        dispatch(createPost(id, content));
-        setContent('');
-    };
+        if (response.ok) {
+          setReplies((prev) => ({ ...prev, [commentId]: '' }));
+          fetchPosts(); // Refresh posts to show the new reply
+        } else {
+          const errorData = await response.json();
+          console.error('Error submitting reply:', errorData);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  };
 
-    return (
-        <div className="container">
-            <h1>Posts for Fanpage</h1>
+  const fetchChatHistory = async (userId) => {
+    // Fetch chat history from your backend or Messenger API if applicable
+    // Implement this function based on your setup
+    // Example: setChatHistory(fetchedChatHistory);
+  };
 
-            {loading && <p>Loading...</p>}
-            {error && <p>Error: {error}</p>}
+  const sendMessage = async () => {
+    if (chatUser && message) {
+      try {
+        const response = await fetch(
+          `https://graph.facebook.com/v21.0/me/messages?access_token=${accessToken}`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              recipient: { id: chatUser.id },
+              message: { text: message },
+            }),
+          }
+        );
 
-            <form onSubmit={handlePostSubmit}>
-                <textarea
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="Write your post here..."
-                    required
-                    style={{ width: '100%', height: '100px' }} // Thêm width và height cho textarea
-                />
-                <button type="submit">Create Post</button>
-            </form>
+        if (response.ok) {
+          setMessage(''); // Clear message input
+          fetchChatHistory(chatUser.id); // Refresh chat history
+        } else {
+          const errorData = await response.json();
+          if (errorData.error.code === 551) {
+            alert("Người dùng hiện không có mặt. Hãy yêu cầu họ nhắn tin cho bạn trước.");
+          } else {
+            console.error('Error sending message:', errorData);
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  };
 
-            <h2>Posts</h2>
-            <ul>
-                {posts.length > 0 ? (
-                    posts.map((post) => (
-                        <li key={post._id}>
-                            <p>{post.content}</p>
-                            <small>Posted on: {new Date(post.createdAt).toLocaleString()}</small>
-                        </li>
-                    ))
-                ) : (
-                    <p>No posts available.</p>
-                )}
-            </ul>
-        </div>
-    );
+  return (
+    <div className="facebook-posts">
+      <div className="sidebar">
+        <h3>Danh sách người dùng</h3>
+        {posts.map((post) => (
+          post.comments && post.comments.data.map((comment) => (
+            <div key={comment.id} className="user-item">
+              <p>{comment.from?.name || 'Người dùng'}</p>
+              <button onClick={() => { 
+                setChatUser({ id: comment.from.id, name: comment.from.name });
+                fetchChatHistory(comment.from.id); 
+              }}>Chat</button>
+            </div>
+          ))
+        ))}
+      </div>
+
+      <div className="chat-window">
+        {chatUser ? (
+          <>
+            <h4>Chat với {chatUser.name}</h4>
+            <div className="chat-history">
+              {/* Render chat history */}
+              {chatHistory.map((msg, index) => (
+                <div key={index} className={msg.isUser ? 'user-message' : 'bot-message'}>
+                  <p>{msg.text}</p>
+                  <p>{new Date(msg.timestamp).toLocaleString()}</p>
+                </div>
+              ))}
+            </div>
+            <input
+              type="text"
+              placeholder="Nhắn tin..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button onClick={sendMessage}>Gửi</button>
+          </>
+        ) : (
+          <p>Chọn một người dùng để bắt đầu trò chuyện.</p>
+        )}
+      </div>
+    </div>
+  );
 };
 
-export default FanpagePost;
+export default FacebookPosts;

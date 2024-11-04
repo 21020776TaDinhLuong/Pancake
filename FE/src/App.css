@@ -695,3 +695,13 @@ ul {
   font-size: 1.2em; /* Kích thước chữ */
 }
 
+.container {
+  display: flex;
+  position: relative;
+}
+
+.posts-container {
+  flex: 1;
+}
+
+
